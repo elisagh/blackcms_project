@@ -1,0 +1,11 @@
+.titulo{
+	color: red;	
+}
+.borroso{
+	color: transparent !important;
+	text-shadow: 0 0 7px rgba(117,116,116,0.5);
+}
+::selection{
+	background: #b3d4fc;
+	text-shadow: none;
+}

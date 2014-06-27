@@ -1,0 +1,180 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}{% endblock  %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href='{% static "css/bootstrap.css" %}' rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href='{% static "css/blog-home.css" %}' rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href='{% static "css/estilo.css" %}'>
+
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'wwwsevillaocioesyes'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'inicio' %}">Inicio</a>
+                <a class="navbar-brand" href="{% url 'publicar' %}">Publicar</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        {% if not user.is_authenticated %} 
+                            <a href="{% url 'account_login' %}">Iniciar sesión</a>
+                        {% else %}
+                            <a href="{% url 'account_logout' %}">Cerrar sesión</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8">
+
+                {% if user.is_authenticated %}
+                    <p>Bienvenido, {{ user.username }}. Gracias por iniciar sesión.</p>
+                {% else %}
+                    <p>Bienvenido, usuario. Por favor inicia sesión.</p>
+                   
+                {% endif %}
+                
+                <p>
+                    {% block content %}
+                    {% endblock %}
+                </p>
+                
+
+                
+                
+                <!-- pager -->
+                
+                    <!--
+                    <ul class="pager">
+                    <li class="previous"><a href="#">&larr; Older</a>
+                    </li>
+                    <li class="next"><a href="#">Newer &rarr;</a>
+                    </li>
+                    </ul>
+                    -->
+                
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="well">
+                    <form action="{% url 'buscar' %}" method="get">
+                        <h4>Buscar</h4>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="busqueda">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- /input-group -->
+                </div>
+                <!-- /well -->
+                <div class="well">
+                    <h4>Categorías</h4>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled">
+
+
+                            {% for categoria in categorias %}
+                                <li><a href="{% url 'view_category' categoria.slug %}">{{categoria.nombre}}</a>
+                                </li>
+                            {% endfor %}
+
+                            <!--
+                                <li><a href="#dinosaurs">Dinosaurs</a>
+                                </li>
+                                <li><a href="#spaceships">Spaceships</a>
+                                </li>
+                                <li><a href="#fried-foods">Fried Foods</a>
+                                </li>
+                                <li><a href="#wild-animals">Wild Animals</a>
+                                </li>
+                                -->
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled">
+                                <li><a href="#alien-abductions">Alien Abductions</a>
+                                </li>
+                                <li><a href="#business-casual">Business Casual</a>
+                                </li>
+                                <li><a href="#robots">Robots</a>
+                                </li>
+                                <li><a href="#fireworks">Fireworks</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /well -->
+                
+            </div>
+        </div>
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Company 2013</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- JavaScript -->
+    <script src='{% static "js/jquery-1.10.2.js" %}'></script>
+    <script src='{% static "js/bootstrap.js" %}'></script>
+    {% block extra_javascript %}
+    {% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+	Ver articulo
+{% endblock %}
+
+{% block content %}
+	<h1>Artículo</h1>
+	{{ articulo.titulo|upper}} 
+	<img src="{{ articulo.imagen.url }}" class="img-responsive">
+    <hr>
+    <p>
+		<article {% if not user.is_authenticated %} class="borroso" {% endif %}>
+			{{ articulo.contenido }} 
+		</article>
+	</p>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Inicio de sesión</h4>
+	      </div>
+	      <div class="modal-body">
+	        <h3>Inicia sesión</h3>
+	        <ul class="socialaccount_providers list-unstyled col-sm-offset-3">
+			    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+			</ul>
+			<h3>
+			  <div class="login-or">
+			  	o regístrate en nuestra página:
+			  </div>
+			</h3>
+			<form class="login" method="POST" action="{% url 'account_login' %}" >
+				{% csrf_token %}
+				{{ form.as_p }}
+				<p><label for="id_login">Login:</label> <input autofocus="autofocus" id="id_login" name="login" placeholder="Username or e-mail" type="text" class="form-control"/></p>
+				<p><label for="id_password">Password:</label> <input id="id_password" name="password" placeholder="Password" type="password" class="form-control"/></p>
+				<p><label for="id_remember">Remember Me:</label> <input id="id_remember" name="remember" type="checkbox" /></p>
+				  
+				<a class="button secondaryAction" href="/accounts/password/reset/">Forgot Password?</a>
+				<div class="modal-footer">
+				<input type="hidden" name="next" value="{% url 'ver_articulo' articulo.id %}" />
+				<button class="primaryAction btn btn-primary" type="submit">Regístrate</button>
+			
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+			</form>
+		</div>
+
+	    </div>
+	      
+	        
+	  </div>
+	</div>
+	  
+	<!--fin modal -->
+
+	<div id="disqus_thread"></div>
+
+	
+
+{% endblock %}
+{% block extra_javascript %}
+	
+	{% if not user.is_authenticated %} 
+        <script type="text/javascript">
+			$('#myModal').modal('show');
+		</script>         
+    {% endif %}
+	
+ {% endblock %}

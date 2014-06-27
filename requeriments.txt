@@ -1,0 +1,10 @@
+Django==1.7b4
+Pillow==2.4.0
+Unipath==1.0
+argparse==1.2.1
+django-allauth==0.16.1
+oauthlib==0.6.3
+python-openid==2.2.5
+requests==2.3.0
+requests-oauthlib==0.4.1
+wsgiref==0.1.2
