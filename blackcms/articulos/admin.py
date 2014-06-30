@@ -3,6 +3,7 @@ from articulos.models import Articulo, Categoria
 
 
 class ArticuloAdmin(admin.ModelAdmin):
+	filter_horizontal = ("categoria",)
 	prepopulated_fields = {"slug": ("titulo",)}
 
 

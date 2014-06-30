@@ -11,14 +11,14 @@ def inicio(request):
 	return render(request, 'articulos/inicio.html', {'articulos' : articulos, 'categorias' : categorias})
 
 
-def ver_articulo(request, id_articulo):
-	articulo = Articulo.objects.get(pk=id_articulo)
+def ver_articulo(request, articulo_id):
+	articulo = Articulo.objects.get(pk=articulo_id)
 	categorias = Categoria.objects.all()
 	return render(request, 'articulos/ver_articulo.html', {'articulo' : articulo, 'categorias' : categorias})
 
 
-def view_category(request, slug_categoria):
-	categoria = Categoria.objects.get(slug=slug_categoria)
+def view_category(request, categoria_slug):
+	categoria = Categoria.objects.get(slug=categoria_slug)
 	articulos = Articulo.objects.filter(categoria=categoria)
 	return render(request, 'articulos/view_category.html', {'articulos' : articulos, 'categoria' : categoria})
 
